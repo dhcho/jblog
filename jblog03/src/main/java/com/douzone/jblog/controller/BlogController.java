@@ -90,7 +90,7 @@ public class BlogController {
 		return "blog/admin/category";
 	}
 	
-	@RequestMapping(value="/admin/category/add", method=RequestMethod.POST)
+	@RequestMapping(value="/admin/category", method=RequestMethod.POST)
 	public String addCategory(
 			@AuthUser UserVo authUser,
 			@RequestParam("name") String name,
@@ -105,23 +105,24 @@ public class BlogController {
 	}
 	
 	@RequestMapping(value="/admin/write", method=RequestMethod.GET)
-	public String adminWrite(@AuthUser UserVo uservo) {
-		System.out.println(uservo.getId());
+	public String adminWrite(@AuthUser UserVo authUser, Model model) {
+		List<CategoryVo> list = categoryService.getCategoryList(authUser.getId());
+		model.addAttribute("list", list);
 		return "blog/admin/write";
 	}
 	
 	@RequestMapping(value="/admin/write", method=RequestMethod.POST)
 	public String adminWrite(
-			@AuthUser UserVo uservo,
+			@AuthUser UserVo authUser,
 			@RequestParam("title") String title,
 			@RequestParam("content") String content,
+			@RequestParam("category") int categoryNo,
 			PostVo vo) {
-		vo.setCategoryNo(2);
+		vo.setCategoryNo(categoryNo);
 		vo.setTitle(title);
 		vo.setContents(content);
-		System.out.println("TEST-----------------------------------");
 		
 		postService.add(vo);
-		return "redirect:/blog/admin/write";
+		return "redirect:/" + authUser.getId();
 	}
 }
