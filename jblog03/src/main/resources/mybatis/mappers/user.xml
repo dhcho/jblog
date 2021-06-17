@@ -2,8 +2,28 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="user">
 	<insert id="insert" parameterType="uservo">
-		insert
-		  into user(id, name, password, join_date, blog_id)
-		values(#{id }, #{name }, #{password }, now(), #{id })
+		INSERT
+		  INTO user(id, name, password, join_date)
+		VALUES(#{id }, #{name }, #{password }, now())
 	</insert>
+	
+	<select id="findUser" resultType="uservo">
+		SELECT id,
+			   name,
+			   password,
+			   join_date
+		FROM user
+		WHERE id = #{id }
+		  AND password = #{password }
+	</select>
+	
+	<select id="findByIdAndPassword" parameterType="map" resultType="uservo">
+		SELECT id,
+			   name,
+			   password,
+			   join_date AS joinDate
+		  FROM user
+		 WHERE id=#{id }
+		   AND password=#{password }
+	</select>
 </mapper>

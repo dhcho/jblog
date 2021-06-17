@@ -2,8 +2,8 @@ package com.douzone.jblog.vo;
 
 public class CategoryVo {
 	private int no;
-	private String name;
-	private String desc;
+	private String name = "카테고리1";
+	private String desc = "정보";
 	private String regDate;
 	private String blogId;
 	

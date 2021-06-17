@@ -25,15 +25,19 @@ public class UserController {
 			@RequestParam("name") String name, 
 			@RequestParam("id") String id, 
 			@RequestParam("password") String password,
-			UserVo uservo
+			UserVo vo
 			) {
-		uservo.setId(id);
-		uservo.setName(name);
-		uservo.setPassword(password);
-		uservo.setBlogId(id);
-		if(!(userService.join(uservo))) {
+		vo.setId(id);
+		vo.setName(name);
+		vo.setPassword(password);
+		if(!(userService.join(vo))) {
 			return "main/index";
 		}
 		return "user/joinsuccess";
+	}
+	
+	@RequestMapping(value="/login", method=RequestMethod.GET)
+	public String login() {
+		return "user/login";
 	}
 }

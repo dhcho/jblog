@@ -5,7 +5,6 @@ public class UserVo {
 	private String name;
 	private String password;
 	private String joinDate;
-	private String blogId;
 	
 	public String getId() {
 		return id;
@@ -31,16 +30,9 @@ public class UserVo {
 	public void setJoinDate(String joinDate) {
 		this.joinDate = joinDate;
 	}
-	public String getBlogId() {
-		return blogId;
-	}
-	public void setBlogId(String blogId) {
-		this.blogId = blogId;
-	}
 	
 	@Override
 	public String toString() {
-		return "UserVo [id=" + id + ", name=" + name + ", password=" + password + ", joinDate=" + joinDate + ", blogId="
-				+ blogId + "]";
+		return "UserVo [id=" + id + ", name=" + name + ", password=" + password + ", joinDate=" + joinDate + "]";
 	}
 }

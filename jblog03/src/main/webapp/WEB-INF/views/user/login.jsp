@@ -12,11 +12,14 @@
 </head>
 <body>
 	<div class="center-content">
-		<jsp:include page="/WEB-INF/views/includes/navigation.jsp" />
-		<form class="login-form">
-      		<label>아이디</label> <input type="text" name="id">
+		<jsp:include page="/WEB-INF/views/includes/header.jsp" />
+		<form class="login-form" id="login-form" method="post" action="${pageContext.request.contextPath }/user/auth">
+      		<label>아이디</label> <input type="text" name="id" value="${id }">
       		<label>패스워드</label> <input type="text" name="password">
-      		<input type="submit" value="로그인">
+			<c:if test='${result =="fail" }'>
+				<p> 로그인에 실패 했습니다. </p>
+			</c:if>
+			<input type="submit" value="로그인">
 		</form>
 	</div>
 </body>

@@ -11,7 +11,7 @@
 </head>
 <body>
 	<div class="center-content">
-		<jsp:include page="/WEB-INF/views/includes/navigation.jsp" />
+		<jsp:include page="/WEB-INF/views/includes/header.jsp" />
 		<form class="search-form">
 			<fieldset>
 				<input type="text" name="keyword" />

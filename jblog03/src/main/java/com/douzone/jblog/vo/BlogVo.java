@@ -3,7 +3,7 @@ package com.douzone.jblog.vo;
 public class BlogVo {
 	private String id;
 	private String title;
-	private String logo;
+	private String logo = "main/webapp/assets/images/logo.jpg";
 	
 	public String getId() {
 		return id;
@@ -12,7 +12,7 @@ public class BlogVo {
 		this.id = id;
 	}
 	public String getTitle() {
-		return title;
+		return title == null ? id + "의 블로그" : title;
 	}
 	public void setTitle(String title) {
 		this.title = title;
