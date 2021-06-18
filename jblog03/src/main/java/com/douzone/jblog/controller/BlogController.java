@@ -57,7 +57,8 @@ public class BlogController {
 		List<PostVo> postList = new ArrayList<>();
 		List<CategoryVo> categoryList = new ArrayList<>();
 		PostVo postvo = new PostVo();
-		String blogTitle = null;
+		String blogTitle = blogService.getBlog(id).getTitle();
+		String logo = blogService.getBlog(id).getLogo();
 		Map<String, Object> postMap = new HashMap<String, Object>();
 		
 		if(pathNo2.isPresent()) {
@@ -69,12 +70,14 @@ public class BlogController {
 			postMap.put("postNo", postNo);
 			postList = postService.getList(postMap);
 			categoryList = categoryService.getList(id);
-			postvo = postService.getLatestPost(postMap);
-			blogTitle = blogService.getBlog(id).getTitle();
 			
 			model.addAttribute("postList", postList);
 			model.addAttribute("categoryList", categoryList);
 			model.addAttribute("post", postvo);
+			model.addAttribute("logo", logo);
+			
+			application.setAttribute("blogTitle", blogTitle);
+			application.setAttribute("id", id);
 			
 			return "blog/main";
 		} else if(pathNo1.isPresent()) {
@@ -85,11 +88,14 @@ public class BlogController {
 			postList = postService.getList(postMap);
 			categoryList = categoryService.getList(id);
 			postvo = postService.getLatestPost(postMap);
-			blogTitle = blogService.getBlog(id).getTitle();
 			
 			model.addAttribute("postList", postList);
 			model.addAttribute("categoryList", categoryList);
 			model.addAttribute("post", postvo);
+			model.addAttribute("logo", logo);
+			
+			application.setAttribute("blogTitle", blogTitle);
+			application.setAttribute("id", id);
 			
 			return "blog/main";
 		}
@@ -134,9 +140,8 @@ public class BlogController {
 	}
 	
 	@RequestMapping(value="/admin/category", method=RequestMethod.GET)
-	public String adminCategory(@AuthUser UserVo uservo, Model model) {
-		System.out.println(uservo.getId());
-		List<CategoryVo> list = categoryService.getList(uservo.getId());
+	public String adminCategory(@AuthUser UserVo authUser, Model model) {
+		List<CategoryVo> list = categoryService.getList(authUser.getId());
 		model.addAttribute("list", list);
 		return "blog/admin/category";
 	}

@@ -27,7 +27,7 @@
 			      		</tr>
 			      		<tr>
 			      			<td class="t">로고이미지</td>
-			      			<!--  <td><img src="${pageContext.request.contextPath }${vo.logo }"></td>      -->			
+			      			<td><img src="${pageContext.request.contextPath }${vo.logo }"></td>		
 			      		</tr>      		
 			      		<tr>
 			      			<td class="t">&nbsp;</td>
