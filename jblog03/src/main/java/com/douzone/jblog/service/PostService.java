@@ -1,5 +1,7 @@
 package com.douzone.jblog.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,5 +15,13 @@ public class PostService {
 	
 	public Boolean add(PostVo vo) {
 		return postRepository.insert(vo);
+	}
+
+	public List<PostVo> getList(String id) {
+		return postRepository.findList(id);
+	}
+
+	public PostVo getLatestPost(String id) {
+		return postRepository.findLatestPost(id);
 	}
 }

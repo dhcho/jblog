@@ -3,6 +3,8 @@ package com.douzone.jblog.controller;
 import java.util.List;
 import java.util.Optional;
 
+import javax.servlet.ServletContext;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,6 +28,9 @@ import com.douzone.jblog.vo.UserVo;
 @RequestMapping("/{id:(?!assets).*}")
 public class BlogController {
 	@Autowired
+	ServletContext application;
+	
+	@Autowired
 	private BlogService blogService;
 	
 	@Autowired
@@ -40,10 +45,16 @@ public class BlogController {
 	@RequestMapping({"", "/{pathNo1}", "/{pathNo1}/{pathNo2}"})
 	public String index(
 			@PathVariable("id") String id,
-			@PathVariable("pathNo1") Optional<Long> pathNo1,
-			@PathVariable("pathNo2") Optional<Long> pathNo2) {
-		Long categoryNo = 0L;
-		Long postNo = 0L;
+			@PathVariable("pathNo1") Optional<Integer> pathNo1,
+			@PathVariable("pathNo2") Optional<Integer> pathNo2,
+			Model model) {
+		int categoryNo = 0;
+		int postNo = 0;
+		
+		List<PostVo> postList = postService.getList(id);
+		List<CategoryVo> categoryList = categoryService.getList(id);
+		PostVo postvo = postService.getLatestPost(id);
+		String blogTitle = blogService.getBlog(id).getTitle();
 		
 		if(pathNo2.isPresent()) {
 			categoryNo = pathNo1.get();
@@ -51,6 +62,12 @@ public class BlogController {
 		} else if(pathNo1.isPresent()) {
 			categoryNo = pathNo1.get();
 		}
+		
+		model.addAttribute("postList", postList);
+		model.addAttribute("categoryList", categoryList);
+		model.addAttribute("post", postvo);
+		
+		application.setAttribute("blogTitle", blogTitle);
 		
 		System.out.println("id:" + id);
 		System.out.println("category:" + categoryNo);
@@ -85,7 +102,7 @@ public class BlogController {
 	@RequestMapping(value="/admin/category", method=RequestMethod.GET)
 	public String adminCategory(@AuthUser UserVo uservo, Model model) {
 		System.out.println(uservo.getId());
-		List<CategoryVo> list = categoryService.getCategoryList(uservo.getId());
+		List<CategoryVo> list = categoryService.getList(uservo.getId());
 		model.addAttribute("list", list);
 		return "blog/admin/category";
 	}
@@ -106,7 +123,7 @@ public class BlogController {
 	
 	@RequestMapping(value="/admin/write", method=RequestMethod.GET)
 	public String adminWrite(@AuthUser UserVo authUser, Model model) {
-		List<CategoryVo> list = categoryService.getCategoryList(authUser.getId());
+		List<CategoryVo> list = categoryService.getList(authUser.getId());
 		model.addAttribute("list", list);
 		return "blog/admin/write";
 	}

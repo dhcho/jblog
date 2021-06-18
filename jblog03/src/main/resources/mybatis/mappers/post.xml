@@ -8,11 +8,27 @@
 	</insert>
 	
 	<select id="findList" resultType="postvo">
-		SELECT no,
-			   title,
-			   contents,
-			   reg_date,
-			   category_no
-		FROM post
+		SELECT A.no,
+			   A.title,
+			   A.contents,
+			   date_format(A.reg_date, '%Y-%m-%d') as regDate,
+			   A.category_no as categoryNo
+		FROM post A
+		INNER JOIN category B ON A.category_no = B.no
+		WHERE B.blog_id = #{id }
+		ORDER BY A.reg_date DESC
+	</select>
+	
+	<select id="findLatestPost" resultType="postvo">
+		SELECT A.no,
+			   A.title,
+			   A.contents,
+			   date_format(A.reg_date, '%Y-%m-%d') as regDate,
+			   A.category_no as categoryNo
+		FROM post A
+		INNER JOIN category B ON A.category_no = B.no
+		WHERE B.blog_id = #{id }
+		ORDER BY A.reg_date DESC
+		LIMIT 1
 	</select>
 </mapper>

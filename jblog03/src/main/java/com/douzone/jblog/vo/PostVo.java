@@ -6,7 +6,6 @@ public class PostVo {
 	private String contents;
 	private String regDate;
 	private int categoryNo;
-	private String userId;
 	
 	public int getNo() {
 		return no;
@@ -38,16 +37,10 @@ public class PostVo {
 	public void setCategoryNo(int categoryNo) {
 		this.categoryNo = categoryNo;
 	}
-	public String getUserId() {
-		return userId;
-	}
-	public void setUserId(String userId) {
-		this.userId = userId;
-	}
 	
 	@Override
 	public String toString() {
 		return "PostVo [no=" + no + ", title=" + title + ", contents=" + contents + ", regDate=" + regDate
-				+ ", categoryNo=" + categoryNo + ", userId=" + userId + "]";
+				+ ", categoryNo=" + categoryNo + "]";
 	}
 }

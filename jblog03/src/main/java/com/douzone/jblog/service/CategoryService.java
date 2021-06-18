@@ -17,7 +17,7 @@ public class CategoryService {
 		return categoryRepository.insert(vo);
 	}
 
-	public List<CategoryVo> getCategoryList(String id) {
+	public List<CategoryVo> getList(String id) {
 		return categoryRepository.findList(id);
 	}
 }
