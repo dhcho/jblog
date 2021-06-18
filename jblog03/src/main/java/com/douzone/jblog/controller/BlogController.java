@@ -70,6 +70,7 @@ public class BlogController {
 			postMap.put("postNo", postNo);
 			postList = postService.getList(postMap);
 			categoryList = categoryService.getList(id);
+			postvo = postService.getLatestPost(postMap);
 			
 			model.addAttribute("postList", postList);
 			model.addAttribute("categoryList", categoryList);
@@ -109,6 +110,7 @@ public class BlogController {
 		model.addAttribute("postList", postList);
 		model.addAttribute("categoryList", categoryList);
 		model.addAttribute("post", postvo);
+		model.addAttribute("logo", logo);
 		
 		application.setAttribute("blogTitle", blogTitle);
 		application.setAttribute("id", id);
