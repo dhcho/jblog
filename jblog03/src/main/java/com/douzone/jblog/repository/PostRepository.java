@@ -1,6 +1,7 @@
 package com.douzone.jblog.repository;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,11 +19,15 @@ public class PostRepository {
 		return count == 1;
 	}
 
-	public List<PostVo> findList(String id) {
-		return sqlSession.selectList("post.findList", id);
+	public List<PostVo> findList(Map<String, Object> map) {
+		return sqlSession.selectList("post.findList", map);
 	}
 
-	public PostVo findLatestPost(String id) {
-		return sqlSession.selectOne("post.findLatestPost", id);
+	public PostVo findLatestPost(Map<String, Object> postMap) {
+		return sqlSession.selectOne("post.findLatestPost", postMap);
+	}
+
+	public List<PostVo> findCondList(Map<String, Object> map) {
+		return sqlSession.selectList("post.findCondList", map);
 	}
 }

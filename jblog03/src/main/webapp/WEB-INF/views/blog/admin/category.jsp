@@ -32,9 +32,14 @@
 						<tr>
 							<td>[${size-status.index }]</td>
 							<td>${vo.name }</td>
-							<td>10</td>
+							<td>${vo.count }</td>
 							<td>${vo.desc }</td>
-							<td><img src="${pageContext.request.contextPath}/assets/images/delete.jpg"></td>
+							<c:if test="${vo.count eq 0 }">
+								<td><a href="${pageContext.request.contextPath }/${authUser.id }/admin/category/delete/${vo.no }"><img src="${pageContext.request.contextPath}/assets/images/delete.jpg"></a></td>
+							</c:if>
+							<c:if test="${vo.count ne 0 }">
+								<td></td>
+							</c:if>
 						</tr>
 					</c:forEach>
 				</table>

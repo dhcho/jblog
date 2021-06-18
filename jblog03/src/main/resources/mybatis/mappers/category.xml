@@ -8,11 +8,18 @@
 	</insert>
 	
 	<select id="findList" resultType="categoryvo">
-		SELECT no,
-			   name,
-			   category.desc,
-			   blog_id
-		FROM category
+		SELECT A.no,
+			   A.name,
+			   A.desc,
+			   (SELECT count(*) FROM post WHERE category_no = A.no) AS count,
+			   A.blog_id
+		FROM category A
 		WHERE blog_id = #{id }
 	</select>
+	
+	<delete id="delete" parameterType="categoryvo">
+		DELETE
+		  FROM category
+		 WHERE no = #{no }
+	</delete>
 </mapper>

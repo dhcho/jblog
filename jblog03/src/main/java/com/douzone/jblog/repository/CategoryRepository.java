@@ -21,4 +21,8 @@ public class CategoryRepository {
 	public List<CategoryVo> findList(String id) {
 		return sqlSession.selectList("category.findList", id);
 	}
+
+	public int delete(CategoryVo vo) {
+		return sqlSession.delete("category.delete", vo);
+	}
 }

@@ -1,6 +1,7 @@
 package com.douzone.jblog.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,11 +18,15 @@ public class PostService {
 		return postRepository.insert(vo);
 	}
 
-	public List<PostVo> getList(String id) {
-		return postRepository.findList(id);
+	public List<PostVo> getList(Map<String, Object> map) {
+		return postRepository.findList(map);
 	}
 
-	public PostVo getLatestPost(String id) {
-		return postRepository.findLatestPost(id);
+	public PostVo getLatestPost(Map<String, Object> postMap) {
+		return postRepository.findLatestPost(postMap);
+	}
+
+	public List<PostVo> getCondList(Map<String, Object> map) {
+		return postRepository.findCondList(map);
 	}
 }

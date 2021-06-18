@@ -1,6 +1,9 @@
 package com.douzone.jblog.controller;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import javax.servlet.ServletContext;
@@ -51,27 +54,58 @@ public class BlogController {
 		int categoryNo = 0;
 		int postNo = 0;
 		
-		List<PostVo> postList = postService.getList(id);
-		List<CategoryVo> categoryList = categoryService.getList(id);
-		PostVo postvo = postService.getLatestPost(id);
-		String blogTitle = blogService.getBlog(id).getTitle();
+		List<PostVo> postList = new ArrayList<>();
+		List<CategoryVo> categoryList = new ArrayList<>();
+		PostVo postvo = new PostVo();
+		String blogTitle = null;
+		Map<String, Object> postMap = new HashMap<String, Object>();
 		
 		if(pathNo2.isPresent()) {
 			categoryNo = pathNo1.get();
 			postNo = pathNo2.get();
+			
+			postMap.put("id", id);
+			postMap.put("categoryNo", categoryNo);
+			postMap.put("postNo", postNo);
+			postList = postService.getList(postMap);
+			categoryList = categoryService.getList(id);
+			postvo = postService.getLatestPost(postMap);
+			blogTitle = blogService.getBlog(id).getTitle();
+			
+			model.addAttribute("postList", postList);
+			model.addAttribute("categoryList", categoryList);
+			model.addAttribute("post", postvo);
+			
+			return "blog/main";
 		} else if(pathNo1.isPresent()) {
 			categoryNo = pathNo1.get();
+			
+			postMap.put("id", id);
+			postMap.put("categoryNo", categoryNo);
+			postList = postService.getList(postMap);
+			categoryList = categoryService.getList(id);
+			postvo = postService.getLatestPost(postMap);
+			blogTitle = blogService.getBlog(id).getTitle();
+			
+			model.addAttribute("postList", postList);
+			model.addAttribute("categoryList", categoryList);
+			model.addAttribute("post", postvo);
+			
+			return "blog/main";
 		}
+		
+		postMap.put("id", id);
+		postList = postService.getList(postMap);
+		categoryList = categoryService.getList(id);
+		postvo = postService.getLatestPost(postMap);
+		blogTitle = blogService.getBlog(id).getTitle();
 		
 		model.addAttribute("postList", postList);
 		model.addAttribute("categoryList", categoryList);
 		model.addAttribute("post", postvo);
 		
 		application.setAttribute("blogTitle", blogTitle);
-		
-		System.out.println("id:" + id);
-		System.out.println("category:" + categoryNo);
-		System.out.println("post:" + postNo);
+		application.setAttribute("id", id);
 		
 		return "blog/main";
 	}
@@ -108,7 +142,7 @@ public class BlogController {
 	}
 	
 	@RequestMapping(value="/admin/category", method=RequestMethod.POST)
-	public String addCategory(
+	public String adminAddCategory(
 			@AuthUser UserVo authUser,
 			@RequestParam("name") String name,
 			@RequestParam("desc") String desc,
@@ -140,6 +174,17 @@ public class BlogController {
 		vo.setContents(content);
 		
 		postService.add(vo);
+		return "redirect:/" + authUser.getId();
+	}
+	
+	@RequestMapping(value="/admin/category/delete/{no}", method=RequestMethod.GET)
+	public String adminDeleteCategory(
+			@AuthUser UserVo authUser,
+			@PathVariable("no") int no,
+			CategoryVo vo) {
+		vo.setNo(no);
+		
+		categoryService.delete(vo);
 		return "redirect:/" + authUser.getId();
 	}
 }

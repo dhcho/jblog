@@ -20,4 +20,8 @@ public class CategoryService {
 	public List<CategoryVo> getList(String id) {
 		return categoryRepository.findList(id);
 	}
+
+	public int delete(CategoryVo vo) {
+		return categoryRepository.delete(vo);
+	}
 }

@@ -7,7 +7,7 @@
 		VALUES(null, #{title }, #{contents }, now(), #{categoryNo })
 	</insert>
 	
-	<select id="findList" resultType="postvo">
+	<select id="findList" parameterType="map" resultType="postvo">
 		SELECT A.no,
 			   A.title,
 			   A.contents,
@@ -16,6 +16,12 @@
 		FROM post A
 		INNER JOIN category B ON A.category_no = B.no
 		WHERE B.blog_id = #{id }
+		<if test="categoryNo != null and categoryNo != '' ">
+		  AND A.category_no = #{categoryNo }
+		</if>
+		<if test="postNo != null and postNo != '' ">
+		  AND A.no = #{postNo }
+		</if>
 		ORDER BY A.reg_date DESC
 	</select>
 	
@@ -28,6 +34,12 @@
 		FROM post A
 		INNER JOIN category B ON A.category_no = B.no
 		WHERE B.blog_id = #{id }
+		<if test="categoryNo != null and categoryNo != '' ">
+		  AND A.category_no = #{categoryNo }
+		</if>
+		<if test="postNo != null and postNo != '' ">
+		  AND A.no = #{postNo }
+		</if>
 		ORDER BY A.reg_date DESC
 		LIMIT 1
 	</select>
