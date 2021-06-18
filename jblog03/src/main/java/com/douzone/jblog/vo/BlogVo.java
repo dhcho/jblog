@@ -3,7 +3,7 @@ package com.douzone.jblog.vo;
 public class BlogVo {
 	private String id;
 	private String title;
-	private String logo = "main/webapp/assets/images/logo.jpg";
+	private String logo = "/assets/images/spring-logo.jpg";
 	
 	public String getId() {
 		return id;
