@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="category">
+	<insert id="insert" parameterType="categoryvo">
+		INSERT
+		  INTO category
+		VALUES(null, #{name }, #{desc }, now(), #{blogId })
+	</insert>
+	
+	<select id="findList" resultType="categoryvo">
+		SELECT A.no,
+			   A.name,
+			   A.desc,
+			   (SELECT count(*) FROM post WHERE category_no = A.no) AS count,
+			   A.blog_id
+		FROM category A
+		WHERE blog_id = #{id }
+	</select>
+	
+	<delete id="delete" parameterType="categoryvo">
+		DELETE
+		  FROM category
+		 WHERE no = #{no }
+	</delete>
+</mapper>
