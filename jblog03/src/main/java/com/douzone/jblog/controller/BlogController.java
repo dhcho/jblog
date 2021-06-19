@@ -65,47 +65,20 @@ public class BlogController {
 			categoryNo = pathNo1.get();
 			postNo = pathNo2.get();
 			
-			postMap.put("id", id);
 			postMap.put("categoryNo", categoryNo);
 			postMap.put("postNo", postNo);
-			postList = postService.getList(postMap);
-			categoryList = categoryService.getList(id);
-			postvo = postService.getLatestPost(postMap);
 			
-			model.addAttribute("postList", postList);
-			model.addAttribute("categoryList", categoryList);
-			model.addAttribute("post", postvo);
-			model.addAttribute("logo", logo);
-			
-			application.setAttribute("blogTitle", blogTitle);
-			application.setAttribute("id", id);
-			
-			return "blog/main";
 		} else if(pathNo1.isPresent()) {
 			categoryNo = pathNo1.get();
 			
-			postMap.put("id", id);
-			postMap.put("categoryNo", categoryNo);
-			postList = postService.getList(postMap);
-			categoryList = categoryService.getList(id);
-			postvo = postService.getLatestPost(postMap);
-			
-			model.addAttribute("postList", postList);
-			model.addAttribute("categoryList", categoryList);
-			model.addAttribute("post", postvo);
-			model.addAttribute("logo", logo);
-			
-			application.setAttribute("blogTitle", blogTitle);
-			application.setAttribute("id", id);
-			
-			return "blog/main";
+			postMap.put("categoryNo", categoryNo);		
 		}
 		
 		postMap.put("id", id);
-		postList = postService.getList(postMap);
+		
 		categoryList = categoryService.getList(id);
+		postList = postService.getList(postMap);
 		postvo = postService.getLatestPost(postMap);
-		blogTitle = blogService.getBlog(id).getTitle();
 		
 		model.addAttribute("postList", postList);
 		model.addAttribute("categoryList", categoryList);
