@@ -29,12 +29,12 @@ public class GlobalExceptionHandler {
 		// System.out.println(errors);
 		/**
 		 * 1. appender
-		 *    - file appender /log-mysite/exception.1.log
+		 *    - file appender /log-jblog/exception.1.log
 		 *      10M (Archiving 정책)
 		 *      1-10(rolling)
 		 *    - console appender
 		 *    
-		 * 2. logger - com.douzone.mysite.exception, level(error), (console+file) appender
+		 * 2. logger - com.douzone.jblog.exception, level(error), (console+file) appender
 		 *    logger - Root, level(debug), console appender
 		 */
 		
