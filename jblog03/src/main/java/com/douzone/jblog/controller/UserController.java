@@ -1,7 +1,10 @@
 package com.douzone.jblog.controller;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -16,7 +19,7 @@ public class UserController {
 	private UserService userService;
 
 	@RequestMapping(value="/join", method=RequestMethod.GET)
-	public String join() {
+	public String join(@ModelAttribute UserVo vo) {
 		return "user/join";
 	}
 	
@@ -25,7 +28,7 @@ public class UserController {
 			@RequestParam("name") String name, 
 			@RequestParam("id") String id, 
 			@RequestParam("password") String password,
-			UserVo vo
+			@ModelAttribute @Valid UserVo vo
 			) {
 		vo.setId(id);
 		vo.setName(name);
