@@ -3,6 +3,7 @@ package com.douzone.jblog.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.ModelAttribute;
 
 import com.douzone.jblog.repository.BlogRepository;
 import com.douzone.jblog.repository.CategoryRepository;
@@ -23,7 +24,7 @@ public class UserService {
 	private CategoryRepository categoryRepository;
 	
 	@Transactional
-	public Boolean join(UserVo uservo) {
+	public Boolean join(@ModelAttribute UserVo uservo) {
 		BlogVo blogvo = new BlogVo();
 		CategoryVo categoryvo = new CategoryVo();
 		blogvo.setId(uservo.getId());
@@ -36,7 +37,7 @@ public class UserService {
 		return chk;
 	}
 	
-	public UserVo login(UserVo uservo) {
+	public UserVo login(@ModelAttribute UserVo uservo) {
 		return userRepository.findUser(uservo);
 	}
 	
