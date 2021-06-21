@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="post">
+	<insert id="insert" parameterType="postvo">
+		INSERT
+		  INTO post
+		VALUES(null, #{title }, #{contents }, now(), #{categoryNo })
+	</insert>
+	
+	<select id="findList" parameterType="map" resultType="postvo">
+		SELECT A.no,
+			   A.title,
+			   A.contents,
+			   date_format(A.reg_date, '%Y-%m-%d') as regDate,
+			   A.category_no as categoryNo
+		FROM post A
+		INNER JOIN category B ON A.category_no = B.no
+		WHERE B.blog_id = #{id }
+		<if test="categoryNo != null and categoryNo != '' ">
+		  AND A.category_no = #{categoryNo }
+		</if>
+		<if test="postNo != null and postNo != '' ">
+		  AND A.no = #{postNo }
+		</if>
+		ORDER BY A.reg_date DESC
+	</select>
+	
+	<select id="findLatestPost" resultType="postvo">
+		SELECT A.no,
+			   A.title,
+			   A.contents,
+			   date_format(A.reg_date, '%Y-%m-%d') as regDate,
+			   A.category_no as categoryNo
+		FROM post A
+		INNER JOIN category B ON A.category_no = B.no
+		WHERE B.blog_id = #{id }
+		<if test="categoryNo != null and categoryNo != '' ">
+		  AND A.category_no = #{categoryNo }
+		</if>
+		<if test="postNo != null and postNo != '' ">
+		  AND A.no = #{postNo }
+		</if>
+		ORDER BY A.reg_date DESC
+		LIMIT 1
+	</select>
+</mapper>

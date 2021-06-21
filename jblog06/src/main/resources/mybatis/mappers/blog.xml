@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="blog">
+	<insert id="insert" parameterType="blogvo">
+		INSERT
+		  INTO blog(id, title, logo)
+		VALUES(#{id }, #{title }, #{logo })
+	</insert>
+	
+	<select id="findBlog" resultType="blogvo">
+		SELECT id,
+			   title,
+			   logo
+		  FROM blog
+		 WHERE id = #{id }
+	</select>
+	
+	<update id="update" parameterType="blogvo">
+		UPDATE blog
+			SET title = #{title },
+				 logo = #{logo }
+		WHERE id = #{id }
+	</update>
+</mapper>
