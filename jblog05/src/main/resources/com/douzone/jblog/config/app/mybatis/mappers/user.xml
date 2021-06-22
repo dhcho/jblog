@@ -26,4 +26,13 @@
 		 WHERE id=#{id }
 		   AND password=#{password }
 	</select>
+	
+	<select id="findById" parameterType="string" resultType="uservo">
+		SELECT id,
+			   name,
+			   password,
+			   join_date AS joinDate
+		  FROM user
+		 WHERE id=#{id }
+	</select>
 </mapper>
