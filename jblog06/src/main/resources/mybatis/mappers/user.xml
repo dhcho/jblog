@@ -33,6 +33,6 @@
 			   password,
 			   join_date AS joinDate
 		  FROM user
-		  WHERE id=#{id }
+		 WHERE id=#{id }
 	</select>
 </mapper>
