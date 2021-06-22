@@ -17,8 +17,10 @@
 	
 	<update id="update" parameterType="blogvo">
 		UPDATE blog
-			SET title = #{title },
-				 logo = #{logo }
+			<trim prefix="SET" suffixOverrides=",">
+      			<if test="title != null and title != '' ">title = #{title},</if>
+      			<if test="logo != null and logo != '' ">logo= #{logo},</if>
+   			</trim>
 		WHERE id = #{id }
 	</update>
 </mapper>

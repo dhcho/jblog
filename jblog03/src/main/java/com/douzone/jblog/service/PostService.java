@@ -22,7 +22,7 @@ public class PostService {
 		return postRepository.findList(map);
 	}
 
-	public PostVo getLatestPost(Map<String, Object> postMap) {
+	public PostVo getPost(Map<String, Object> postMap) {
 		return postRepository.findLatestPost(postMap);
 	}
 

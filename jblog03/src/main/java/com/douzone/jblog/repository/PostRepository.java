@@ -24,7 +24,7 @@ public class PostRepository {
 	}
 
 	public PostVo findLatestPost(Map<String, Object> postMap) {
-		return sqlSession.selectOne("post.findLatestPost", postMap);
+		return sqlSession.selectOne("post.findPost", postMap);
 	}
 
 	public List<PostVo> findCondList(Map<String, Object> map) {

@@ -60,26 +60,29 @@ public class BlogController {
 		List<CategoryVo> categoryList = new ArrayList<>();
 		String blogTitle = blogService.getBlog(id).getTitle();
 		String logo = blogService.getBlog(id).getLogo();
+		Map<String, Object> listMap = new HashMap<String, Object>();
 		Map<String, Object> postMap = new HashMap<String, Object>();
 		
 		if(pathNo2.isPresent()) {
 			categoryNo = pathNo1.get();
 			postNo = pathNo2.get();
 			
+			listMap.put("categoryNo", categoryNo);	
 			postMap.put("categoryNo", categoryNo);
 			postMap.put("postNo", postNo);
-			
 		} else if(pathNo1.isPresent()) {
 			categoryNo = pathNo1.get();
 			
-			postMap.put("categoryNo", categoryNo);		
+			listMap.put("categoryNo", categoryNo);	
+			postMap.put("categoryNo", categoryNo);
 		}
 		
+		listMap.put("id", id);
 		postMap.put("id", id);
 		
 		categoryList = categoryService.getList(id);
-		postList = postService.getList(postMap);
-		postvo = postService.getLatestPost(postMap);
+		postList = postService.getList(listMap);
+		postvo = postService.getPost(postMap);
 		
 		model.addAttribute("postList", postList);
 		model.addAttribute("categoryList", categoryList);
