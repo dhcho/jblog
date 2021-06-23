@@ -23,7 +23,7 @@ public class PostRepository {
 		return sqlSession.selectList("post.findList", map);
 	}
 
-	public PostVo findLatestPost(Map<String, Object> postMap) {
+	public PostVo findPost(Map<String, Object> postMap) {
 		return sqlSession.selectOne("post.findPost", postMap);
 	}
 

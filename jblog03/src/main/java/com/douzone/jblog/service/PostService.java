@@ -23,7 +23,7 @@ public class PostService {
 	}
 
 	public PostVo getPost(Map<String, Object> postMap) {
-		return postRepository.findLatestPost(postMap);
+		return postRepository.findPost(postMap);
 	}
 
 	public List<PostVo> getCondList(Map<String, Object> map) {
