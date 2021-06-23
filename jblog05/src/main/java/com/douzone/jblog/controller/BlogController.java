@@ -11,6 +11,7 @@ import javax.servlet.ServletContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -50,35 +51,38 @@ public class BlogController {
 			@PathVariable("id") String id,
 			@PathVariable("pathNo1") Optional<Integer> pathNo1,
 			@PathVariable("pathNo2") Optional<Integer> pathNo2,
+			@ModelAttribute PostVo postvo,
 			Model model) {
 		int categoryNo = 0;
 		int postNo = 0;
 		
 		List<PostVo> postList = new ArrayList<>();
 		List<CategoryVo> categoryList = new ArrayList<>();
-		PostVo postvo = new PostVo();
 		String blogTitle = blogService.getBlog(id).getTitle();
 		String logo = blogService.getBlog(id).getLogo();
+		Map<String, Object> listMap = new HashMap<String, Object>();
 		Map<String, Object> postMap = new HashMap<String, Object>();
 		
 		if(pathNo2.isPresent()) {
 			categoryNo = pathNo1.get();
 			postNo = pathNo2.get();
 			
+			listMap.put("categoryNo", categoryNo);	
 			postMap.put("categoryNo", categoryNo);
 			postMap.put("postNo", postNo);
-			
 		} else if(pathNo1.isPresent()) {
 			categoryNo = pathNo1.get();
 			
-			postMap.put("categoryNo", categoryNo);		
+			listMap.put("categoryNo", categoryNo);	
+			postMap.put("categoryNo", categoryNo);
 		}
 		
+		listMap.put("id", id);
 		postMap.put("id", id);
 		
 		categoryList = categoryService.getList(id);
-		postList = postService.getList(postMap);
-		postvo = postService.getLatestPost(postMap);
+		postList = postService.getList(listMap);
+		postvo = postService.getPost(postMap);
 		
 		model.addAttribute("postList", postList);
 		model.addAttribute("categoryList", categoryList);
@@ -104,7 +108,7 @@ public class BlogController {
 			@AuthUser UserVo authUser,
 			@RequestParam("title") String title,
 			@RequestParam("logo-file") MultipartFile file,
-			BlogVo vo) {
+			@ModelAttribute BlogVo vo) {
 		String url = fileUploadService.restore(file);
 		vo.setId(authUser.getId());
 		vo.setTitle(title);
@@ -126,7 +130,7 @@ public class BlogController {
 			@AuthUser UserVo authUser,
 			@RequestParam("name") String name,
 			@RequestParam("desc") String desc,
-			CategoryVo vo) {
+			@ModelAttribute CategoryVo vo) {
 		vo.setBlogId(authUser.getId());
 		vo.setName(name);
 		vo.setDesc(desc);
@@ -148,7 +152,7 @@ public class BlogController {
 			@RequestParam("title") String title,
 			@RequestParam("content") String content,
 			@RequestParam("category") int categoryNo,
-			PostVo vo) {
+			@ModelAttribute PostVo vo) {
 		vo.setCategoryNo(categoryNo);
 		vo.setTitle(title);
 		vo.setContents(content);
@@ -161,7 +165,7 @@ public class BlogController {
 	public String adminDeleteCategory(
 			@AuthUser UserVo authUser,
 			@PathVariable("no") int no,
-			CategoryVo vo) {
+			@ModelAttribute CategoryVo vo) {
 		vo.setNo(no);
 		
 		categoryService.delete(vo);
