@@ -22,8 +22,8 @@ public class PostService {
 		return postRepository.findList(map);
 	}
 
-	public PostVo getLatestPost(Map<String, Object> postMap) {
-		return postRepository.findLatestPost(postMap);
+	public PostVo getPost(Map<String, Object> postMap) {
+		return postRepository.findPost(postMap);
 	}
 
 	public List<PostVo> getCondList(Map<String, Object> map) {
