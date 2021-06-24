@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.douzone.jblog.security.Auth;
 import com.douzone.jblog.security.AuthUser;
 import com.douzone.jblog.service.BlogService;
 import com.douzone.jblog.service.CategoryService;
@@ -95,6 +96,7 @@ public class BlogController {
 		return "blog/main";
 	}
 	
+	@Auth
 	@RequestMapping(value="/admin/basic", method=RequestMethod.GET)
 	public String adminBasic(@AuthUser UserVo authUser, Model model) {
 		String id = authUser.getId();
@@ -103,6 +105,7 @@ public class BlogController {
 		return "blog/admin/basic";
 	}
 	
+	@Auth
 	@RequestMapping(value="/admin/basic", method=RequestMethod.POST)
 	public String updateBasic(
 			@AuthUser UserVo authUser,
@@ -118,6 +121,7 @@ public class BlogController {
 		return "redirect:/blog/admin/basic";
 	}
 	
+	@Auth
 	@RequestMapping(value="/admin/category", method=RequestMethod.GET)
 	public String adminCategory(@AuthUser UserVo authUser, Model model) {
 		List<CategoryVo> list = categoryService.getList(authUser.getId());
@@ -125,6 +129,7 @@ public class BlogController {
 		return "blog/admin/category";
 	}
 	
+	@Auth
 	@RequestMapping(value="/admin/category", method=RequestMethod.POST)
 	public String adminAddCategory(
 			@AuthUser UserVo authUser,
@@ -139,6 +144,7 @@ public class BlogController {
 		return "redirect:/blog/admin/category";
 	}
 	
+	@Auth
 	@RequestMapping(value="/admin/write", method=RequestMethod.GET)
 	public String adminWrite(@AuthUser UserVo authUser, Model model) {
 		List<CategoryVo> list = categoryService.getList(authUser.getId());
@@ -146,6 +152,7 @@ public class BlogController {
 		return "blog/admin/write";
 	}
 	
+	@Auth
 	@RequestMapping(value="/admin/write", method=RequestMethod.POST)
 	public String adminWrite(
 			@AuthUser UserVo authUser,
@@ -161,6 +168,7 @@ public class BlogController {
 		return "redirect:/" + authUser.getId();
 	}
 	
+	@Auth
 	@RequestMapping(value="/admin/category/delete/{no}", method=RequestMethod.GET)
 	public String adminDeleteCategory(
 			@AuthUser UserVo authUser,

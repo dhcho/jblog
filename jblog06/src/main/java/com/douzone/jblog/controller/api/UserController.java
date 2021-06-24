@@ -21,8 +21,8 @@ public class UserController {
 	@GetMapping("/checkid")
 	public JsonResult checkId(@RequestParam(value="id", required=true, defaultValue="") String id) {
 		UserVo userVo = userService.getUser(id);
-		System.out.println("=======================================" + id);
-		Boolean data = userVo != null;
+		
+		// Boolean data = userVo != null;
 		
 		// result.setResult("ok");
 		// result.setData(data);
