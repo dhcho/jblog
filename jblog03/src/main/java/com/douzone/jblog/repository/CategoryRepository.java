@@ -22,7 +22,8 @@ public class CategoryRepository {
 		return sqlSession.selectList("category.findList", id);
 	}
 
-	public int delete(CategoryVo vo) {
-		return sqlSession.delete("category.delete", vo);
+	public Boolean delete(CategoryVo vo) {
+		int count = sqlSession.delete("category.delete", vo);
+		return count == 1;
 	}
 }

@@ -21,7 +21,7 @@ public class CategoryService {
 		return categoryRepository.findList(id);
 	}
 
-	public int delete(CategoryVo vo) {
+	public Boolean delete(CategoryVo vo) {
 		return categoryRepository.delete(vo);
 	}
 }
