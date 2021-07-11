@@ -28,20 +28,8 @@
 			dataType: "json",
 			type: "get",
 			success: function(response) {
-				/* response.data.forEach(function(vo) {
-					html = "<li data-no='" + vo.no + "'>" + 
-					"<strong>" + vo.name + "</strong>" +
-					"<p>" + vo.message + "</p>" +
-					"<strong></strong>" + 
-					"<a href='' data-no='" + vo.no + "'>삭제</a>" + 
-					"</li>";
-					
-					$("#list-guestbook").append(html);
-				}); */
-				
-				response.data.forEach(function(vo, index) {
-					console.log(vo.no);
-					const del = (vo.count != 0 ? ("<td></td>") : ("<td><a href='${pageContext.request.contextPath }/${authUser.id }/admin/category/delete/'" + vo.no + ">" +
+				/* response.data.forEach(function(vo, index) {
+					const del = (vo.count != 0 ? ("<td></td>") : ("<td><a href='${pageContext.request.contextPath }/${authUser.id }/admin/category/delete/" + vo.no + "'>" +
 							"<img src='${pageContext.request.contextPath}/assets/images/delete.jpg'>" +
 							"</a></td>"));
 					html = "<tr>" +
@@ -53,10 +41,10 @@
 							"</tr>";
 							
 					$("#admin-cat").append(html);
-				});
+				}); */
 
-				// var html = listEJS.render(response);
-				// $("#admin-cat").append(html);
+				var html = listEJS.render(response);
+				$("#admin-cat").append(html);
 			}
 		});
 	}
@@ -105,7 +93,7 @@
 				contentType: "application/json",
 				data: JSON.stringify(vo),
 				success: function(response) {
-					var vo = response.data;
+					/* var vo = response.data;
 					const del = (vo.count != 0 ? ("<td></td>") : ("<td><a href='${pageContext.request.contextPath }/${authUser.id }/admin/category/delete/'" + vo.no + ">" +
 							"<img src='${pageContext.request.contextPath}/assets/images/delete.jpg'>" +
 							"</a></td>"));
@@ -116,8 +104,8 @@
 								"<td>" + vo.count + "</td>" +
 								"<td>" + vo.desc + "</td>" +
 								del + 
-							"</tr>";
-					// var html = listItemEJS.render(response.data);
+							"</tr>"; */
+					var html = listItemEJS.render(response.data);
 							
 					$("#admin-cat").append(html);
 				}

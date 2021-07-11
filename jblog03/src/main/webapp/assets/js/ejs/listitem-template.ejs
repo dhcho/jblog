@@ -1,6 +1,19 @@
-<li data-no='<%=no%>'> 
-	<strong><%=name%></strong>
-	<p><%=message.replace(/\n/gi, "<br/>")%></p>
-	<strong></strong> 
-	<a href='' data-no='<%=no>'>삭제</a> 
-</li>
+<%	
+	var hostIndex = location.href.indexOf( location.host ) + location.host.length;
+	var contextPath = location.href.substring( hostIndex, location.href.indexOf('/', hostIndex + 1) );
+%>	
+<tr>
+	<td><%=vo.no%></td>
+	<td><%=vo.name%></td>
+	<td><%=vo.count%></td>
+	<td><%=vo.desc%></td>
+	<% if(vo.count != 0) { %>
+		<td></td>
+	<% } else { %>
+		<td>
+			<a href="<%=contextPath%>/<%=vo.blogId%>/admin/category/delete/<%=vo.no%>">
+			<img src="<%=contextPath%>/assets/images/delete.jpg">
+			</a>
+		</td>
+	<% } %>
+</tr>

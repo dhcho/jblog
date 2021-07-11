@@ -12,7 +12,7 @@
 			   A.name,
 			   A.desc,
 			   (SELECT count(*) FROM post WHERE category_no = A.no) AS count,
-			   A.blog_id
+			   A.blog_id AS blogId
 		FROM category A
 		WHERE blog_id = #{id }
 	</select>

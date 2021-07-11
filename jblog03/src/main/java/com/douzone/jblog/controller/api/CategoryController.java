@@ -22,7 +22,6 @@ public class CategoryController {
 	@ResponseBody
 	@RequestMapping("/list/{id}")
 	public JsonResult list(@PathVariable("id") String id) {
-		System.out.println("========================" + id);
 		List<CategoryVo> list = categoryService.getList(id);
 
 		return JsonResult.success(list);
