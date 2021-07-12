@@ -73,13 +73,16 @@
 			
 			vo.name = $("#input-name").val();
 			vo.desc = $("#input-desc").val();
+			vo.blogId = "${authUser.id}";
 			
 			// validation
 			if(vo.name == "" || vo.desc == "") {
 				if(vo.name == "") {
 					$("#dialog-message").text("카테고리명이 비어있습니다.");
-				} else if(vo.password == "") {
+					$("#input-name").focus();
+				} else if(vo.desc == "") {
 					$("#dialog-message").text("설명이 비어있습니다.");
+					$("#input-desc").focus();
 				}
 				valid("알림");
 				return;
@@ -108,10 +111,17 @@
 					var html = listItemEJS.render(response.data);
 							
 					$("#admin-cat").append(html);
+					
+					// form reset
+					$("#admin-cat-add")[0].reset();
 				}
 			});
-			
-			// 데이터 등록
+		});
+		
+		// live event: 존재하지 않는 element의 이벤트 핸들러를 미리 등록
+		// delegation(위임) -> document
+		$(document).on("click", "#delete-td td a", function(event){
+			// 데이터 삭제
 			$.ajax({
 				url: "${pageContext.request.contextPath }/${authUser.id }/admin/category/delete/"+no,
 				dataType: "json",
@@ -146,8 +156,8 @@
 		      		</tr>
 				</table>
       			<h4 class="n-c">새로운 카테고리 추가</h4>
-      			<form action="" method="post">
-		      	<table id="admin-cat-add">
+      			<form id="admin-cat-add" action="" method="post">
+		      	<table>
 		      		<tr>
 		      			<td class="t">카테고리명</td>
 		      			<td><input type="text" id="input-name" name="name"></td>
