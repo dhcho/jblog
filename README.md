@@ -8,7 +8,7 @@
 
    | --- jblog06: Spring Framework -> Spring Boot
 
-* DB Schema
+* DB Schema(MariaDB)
 ```
 -- jblog.`user` definition
 
